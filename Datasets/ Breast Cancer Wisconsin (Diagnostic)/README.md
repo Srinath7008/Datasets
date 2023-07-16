@@ -7,6 +7,7 @@ Number of Instances: 569
 Number of Attributes: 32 (including the class attribute)
 
 Attribute Information:
+
     ID number
     Diagnosis
     Radius (mean)
