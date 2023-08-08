@@ -1,5 +1,4 @@
 import pandas as pd
-import transformations as tr
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
 def feature_standardization(X):
