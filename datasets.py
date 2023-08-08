@@ -1,5 +1,47 @@
 import pandas as pd
 import transformations as tr
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+
+def feature_standardization(X):
+    """
+    Performs feature standardization on the input feature matrix X.
+
+    Args:
+        X (numpy.ndarray): Input feature matrix of shape (m, n), where m is the number of samples and n is the number of features.
+
+    Returns:
+        numpy.ndarray: Standardized feature matrix of shape (m, n).
+
+    """
+
+    # Create a StandardScaler object
+    scaler = StandardScaler()
+
+    # Fit the scaler to the data and transform the data
+    X_standardized = scaler.fit_transform(X)
+
+    return X_standardized
+
+def feature_normalization(X):
+    """
+    Performs feature normalization on the input feature matrix X to the range [-1, 1].
+
+    Args:
+        X (numpy.ndarray): Input feature matrix of shape (m, n), where m is the number of samples and n is the number of features.
+
+    Returns:
+        numpy.ndarray: Normalized feature matrix of shape (m, n).
+
+    """
+
+    # Create a MinMaxScaler object with feature range set to (-1, 1)
+    #scaler = MinMaxScaler(feature_range=(0, 1))
+    scaler = MinMaxScaler()
+
+    # Fit the scaler to the data and transform the data
+    X_normalized = scaler.fit_transform(X)
+
+    return X_normalized
 
 
 def return_data_matrix(path,column_names,transform):
@@ -7,9 +49,9 @@ def return_data_matrix(path,column_names,transform):
     X = df.iloc[:, :-1].values
     y = df.iloc[:, -1].values
     if transform == 1:
-        X = tr.feature_standardization(X)
+        X = feature_standardization(X)
     elif transform == 2:
-        X = tr.feature_normalization(X)     
+        X = feature_normalization(X)     
     X = pd.DataFrame(X,columns=column_names)
     return X,y
 
@@ -81,9 +123,9 @@ def ceramic(transformation = 0):
     X = df.iloc[:, 2:].values
     y = df.iloc[:, 1].values
     if transformation == 1:
-        X = tr.feature_standardization(X)
+        X = feature_standardization(X)
     elif transformation == 2:
-        X = tr.feature_normalization(X)     
+        X = feature_normalization(X)     
     X = pd.DataFrame(X,columns=feature_names)
     return X,y
 
@@ -128,4 +170,13 @@ def banknote(transformation = 0):
     path = "https://raw.githubusercontent.com/Srinath7008/Datasets/main/Datasets/%20Banknote%20authentication/banknote_authentication.csv"
     feature_names = ["Variance","Skewness","Curtosis","Entropy"]
     return return_data_matrix(path,feature_names,transformation)
+
+def mnist(mode):
+    import keras
+    from keras.datasets import mnist
+    (train_X, train_y), (test_X, test_y) = mnist.load_data()
+    if mode == 'train':
+        return train_X, train_y
+    else:
+        return test_X, test_y
 
