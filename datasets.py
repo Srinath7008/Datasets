@@ -177,3 +177,8 @@ def mnist(mode):
         return train_X, train_y
     else:
         return test_X, test_y
+
+def voting():
+    path = 'https://raw.githubusercontent.com/Srinath7008/Datasets/main/Datasets/Congressional%20Voting%20Records/voting_with_imputation.csv'
+    feature_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16"]
+    return return_data_matrix(path,feature_names,0)
